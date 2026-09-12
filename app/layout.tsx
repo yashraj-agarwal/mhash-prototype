@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { TopNavigation } from "@/components/layout/TopNavigation";
+import { SystemProviders } from "@/components/providers/SystemProviders";
+import { CommandPalette } from "@/components/layout/CommandPalette";
+import { AIAssistant } from "@/components/ai/AIAssistant";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -33,13 +36,17 @@ export default function RootLayout({
       className={`${inter.variable} antialiased h-full w-full`}
     >
       <body className="h-[100dvh] w-full flex bg-background text-foreground overflow-hidden font-sans">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col min-w-0 h-[100dvh]">
-          <TopNavigation />
-          <main className="flex-1 overflow-y-auto overflow-x-hidden">
-            {children}
-          </main>
-        </div>
+        <SystemProviders>
+          <CommandPalette />
+          <AIAssistant />
+          <AppSidebar />
+          <div className="flex-1 flex flex-col min-w-0 h-[100dvh]">
+            <TopNavigation />
+            <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 relative">
+              {children}
+            </main>
+          </div>
+        </SystemProviders>
       </body>
     </html>
   );

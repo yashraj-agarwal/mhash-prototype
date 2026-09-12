@@ -22,24 +22,24 @@ export default function LandingPage(props: Partial<typeof settings>) {
       <style>{`
         [data-slipstream-demo] [data-gp-caption]{inset:calc(var(--gp-word-bottom,50%) + 82px) 24px auto;justify-content:center;}
         [data-slipstream-demo] [data-gp-hint]{display:none;}
-        [data-slipstream-demo] [data-gp-enter]{min-height:46px;padding:0 24px;gap:28px;background:#142b22;border:none;border-radius:99px;color:#fff;font-size:14px;font-weight:600;box-shadow:0 4px 14px rgba(20,43,34,0.15);transition:transform .2s,box-shadow .2s,background .2s;}
-        [data-slipstream-demo] [data-gp-enter]:hover{background:#176247;box-shadow:0 6px 20px rgba(23,98,71,0.2);transform:translateY(-1px);}
-        [data-slipstream-demo] [data-gp-enter]:focus-visible{outline:2px solid #176247;outline-offset:4px;}
+        [data-slipstream-demo] [data-gp-enter]{min-height:46px;padding:0 24px;gap:28px;background:#0071e3;border:none;border-radius:99px;color:#fff;font-size:15px;font-weight:600;box-shadow:0 4px 14px rgba(0,113,227,0.3);transition:transform .2s,box-shadow .2s,background .2s;}
+        [data-slipstream-demo] [data-gp-enter]:hover{background:#0077ed;box-shadow:0 6px 20px rgba(0,113,227,0.4);transform:translateY(-1px);}
+        [data-slipstream-demo] [data-gp-enter]:focus-visible{outline:2px solid #0071e3;outline-offset:4px;}
         [data-slipstream-demo] [data-gp-touch-picker]{top:auto;bottom:18px;left:50%;}
-        [data-slipstream-demo] [data-gp-select]{border-color:transparent;border-radius:8px;font-size:12px;color:#626964;}
+        [data-slipstream-demo] [data-gp-select]{border-color:transparent;border-radius:8px;font-size:12px;color:#86868b;}
         [data-sublime-header]{position:absolute;inset:clamp(24px,4.5cqw,48px) clamp(24px,5cqw,64px) auto;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-        [data-sublime-logo]{font-size:22px;font-weight:700;letter-spacing:-.04em;color:#142b22;}
-        [data-sublime-category]{font-size:13px;font-weight:500;line-height:1.5;color:#71766f;text-transform:uppercase;letter-spacing:0.1em;}
-        [data-sublime-eyebrow]{position:absolute;inset:auto 24px calc(100% - var(--gp-word-top,35%) + 40px);margin:0;text-align:center;font-size:14px;font-weight:500;line-height:1.5;letter-spacing:.02em;color:#71766f;}
-        [data-sublime-support]{position:absolute;inset:calc(var(--gp-word-bottom,50%) + 40px) 24px auto;margin:0;text-align:center;font-size:18px;font-weight:500;line-height:1.5;color:#142b22;}
-        [data-sublime-scroll]{position:absolute;inset:auto 24px 7%;text-align:center;color:#a1a7a4;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+        [data-sublime-logo]{font-size:24px;font-weight:700;letter-spacing:-.04em;color:#1d1d1f;}
+        [data-sublime-category]{font-size:13px;font-weight:600;line-height:1.5;color:#86868b;text-transform:uppercase;letter-spacing:0.1em;}
+        [data-sublime-eyebrow]{position:absolute;inset:auto 24px calc(100% - var(--gp-word-top,35%) + 40px);margin:0;text-align:center;font-size:15px;font-weight:600;line-height:1.5;letter-spacing:.02em;color:#86868b;}
+        [data-sublime-support]{position:absolute;inset:calc(var(--gp-word-bottom,50%) + 40px) 24px auto;margin:0;text-align:center;font-size:19px;font-weight:600;line-height:1.5;color:#1d1d1f;}
+        [data-sublime-scroll]{position:absolute;inset:auto 24px 7%;text-align:center;color:#86868b;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
         @media(any-pointer:coarse){[data-sublime-scroll]{bottom:13%;}}
-        @container(max-width:450px){[data-sublime-category]{max-width:12ch;text-align:right;}[data-sublime-eyebrow]{font-size:12px;}[data-sublime-support]{font-size:16px;}[data-slipstream-demo] [data-gp-caption]{top:calc(var(--gp-word-bottom,50%) + 76px);}}
+        @container(max-width:450px){[data-sublime-category]{max-width:12ch;text-align:right;}[data-sublime-eyebrow]{font-size:13px;}[data-sublime-support]{font-size:17px;}[data-slipstream-demo] [data-gp-caption]{top:calc(var(--gp-word-bottom,50%) + 76px);}}
         @container(max-height:479px){[data-sublime-header]{top:18px;}[data-sublime-support]{top:calc(var(--gp-word-bottom,50%) + 16px);}[data-slipstream-demo] [data-gp-caption]{top:calc(var(--gp-word-bottom,50%) + 60px);}[data-sublime-scroll]{display:none;}}
         [data-slipstream-demo] [data-gp-content]{padding:6rem clamp(1.25rem,5cqw,5rem) 8rem;font-family:inherit;}
         [data-slipstream-demo] section,[data-slipstream-demo] [data-gp-caption]{font-family:inherit;}
         [data-slipstream-copy]{display:flex;width:min(100%,80rem);margin:auto;flex-direction:column;align-items:flex-start;gap:clamp(3rem,6svh,5rem);}
-        [data-slipstream-copy] h2{max-width:54rem;margin:0;color:inherit;font-size:clamp(2.5rem,2rem + 2.5cqw,4rem);font-weight:500;line-height:1.1;letter-spacing:-0.02em;text-wrap:balance;}
+        [data-slipstream-copy] h2{max-width:54rem;margin:0;color:inherit;font-size:clamp(2.5rem,2rem + 2.5cqw,4rem);font-weight:600;line-height:1.1;letter-spacing:-0.02em;text-wrap:balance;}
         [data-slipstream-features]{display:grid;width:100%;grid-template-columns:1fr;gap:2rem;}
         [data-slipstream-feature]{border-top:1px solid rgba(251,251,250,.2);padding-top:1.5rem;}
         [data-slipstream-feature] h3{margin:0;color:inherit;font-size:1.25rem;font-weight:600;line-height:1.2;letter-spacing:-0.01em;}
@@ -60,13 +60,13 @@ export default function LandingPage(props: Partial<typeof settings>) {
           enterLabel="Enter Platform"
           background={
             <div style={{ position: "absolute", inset: 0, overflow: 'hidden' }}>
-              <div style={{ position: "absolute", inset: 0, backgroundColor: '#0c1212' }} />
+              <div style={{ position: "absolute", inset: 0, backgroundColor: '#000' }} />
               <img 
                 src="https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&q=80" 
                 alt="Architecture" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3, mixBlendMode: 'luminosity' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.2, mixBlendMode: 'luminosity' }}
               />
-              <div style={{ position: "absolute", inset: 0, background: 'linear-gradient(135deg, rgba(12,18,18,0.9) 0%, rgba(20,43,34,0.95) 100%)' }} />
+              <div style={{ position: "absolute", inset: 0, background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(29,29,31,0.95) 100%)' }} />
             </div>
           }
           front={
@@ -99,7 +99,7 @@ export default function LandingPage(props: Partial<typeof settings>) {
             </div>
             
             <div className="mt-16 flex justify-center w-full">
-              <Link href="/command-center" className="inline-flex items-center justify-center gap-3 px-12 py-4 bg-white text-[#142b22] font-semibold rounded-full hover:bg-gray-50 transition-all shadow-xl hover:-translate-y-1 hover:shadow-2xl">
+              <Link href="/command-center" className="inline-flex items-center justify-center gap-3 px-12 py-4 bg-white text-[#1d1d1f] font-semibold rounded-full hover:bg-gray-100 transition-all shadow-xl hover:-translate-y-1 hover:shadow-2xl">
                 Enter Command Center
                 <ArrowRight className="w-5 h-5" />
               </Link>

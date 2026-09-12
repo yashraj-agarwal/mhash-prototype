@@ -45,13 +45,13 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
         <div className="max-w-4xl">
           <div className="flex items-center gap-3 mb-4">
             {isHighPriority && (
-              <span className="px-2 py-1 rounded bg-destructive/10 text-destructive text-[10px] font-bold uppercase tracking-wider">High Priority</span>
+              <span className="px-2.5 py-1 rounded-full bg-secondary text-foreground text-[11px] font-semibold tracking-tight">High Priority</span>
             )}
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em]">{project.authority} / {project.location.state}</span>
+            <span className="text-[12px] font-semibold text-muted-foreground tracking-tight">{project.authority} / {project.location.state}</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-foreground leading-[1.05]">{project.name}</h1>
-          <p className="text-sm text-muted-foreground mt-6 flex items-center gap-2 font-medium">
-            <span className={`w-2 h-2 rounded-full ${isHighPriority ? 'bg-destructive animate-pulse' : 'bg-[#f59e0b]'}`} />
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-tighter text-foreground leading-[1.05]">{project.name}</h1>
+          <p className="text-[14px] text-muted-foreground mt-6 flex items-center gap-2.5 font-medium">
+            <span className="w-2 h-2 rounded-full bg-chart-2" />
             Last updated {project.lastEvent}
           </p>
         </div>
@@ -75,22 +75,22 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
       </div>
 
       {/* Intelligence Summary Panels */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-between">
-          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] mb-4">Intelligence Narrative</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-card p-8 rounded-[24px] border border-border shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="text-[12px] font-semibold text-muted-foreground tracking-tight mb-5">Intelligence Narrative</div>
           <p className="text-[15px] font-medium leading-relaxed text-foreground">{project.narrative || 'No variations detected. Project aligns with award snapshot.'}</p>
         </div>
         
-        <div className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-between">
-          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] mb-4">Detected Variations</div>
+        <div className="bg-card p-8 rounded-[24px] border border-border shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="text-[12px] font-semibold text-muted-foreground tracking-tight mb-5">Detected Variations</div>
           <div className="flex items-center gap-6">
-            <div className={`text-6xl font-semibold tracking-tight ${variations.length > 0 ? (isHighPriority ? 'text-destructive' : 'text-[#f59e0b]') : 'text-[#10b981]'}`}>
+            <div className="text-6xl font-semibold tracking-tighter text-foreground">
               {variations.length}
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               {variations.slice(0, 3).map((v, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                  <AlertTriangle className="w-3.5 h-3.5 text-[#f59e0b]" />
+                <div key={i} className="flex items-center gap-2.5 text-[13px] font-medium text-muted-foreground">
+                  <AlertTriangle className="w-4 h-4 text-primary" />
                   {v.dimension}
                 </div>
               ))}
@@ -98,22 +98,22 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
           </div>
         </div>
 
-        <div className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-between">
-          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] mb-4">Evidence State</div>
+        <div className="bg-card p-8 rounded-[24px] border border-border shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="text-[12px] font-semibold text-muted-foreground tracking-tight mb-5">Evidence State</div>
           {gaps.length > 0 ? (
             <div>
-              <div className="text-5xl font-semibold tracking-tight text-destructive mb-3">{gaps.length} <span className="text-2xl">Gaps</span></div>
-              <div className="text-xs font-medium text-muted-foreground">Requires {gaps[0].type}</div>
-              <Link href={`/projects/${project.id}/evidence`} className="inline-flex items-center gap-1.5 mt-4 text-xs font-bold text-foreground hover:text-primary uppercase tracking-wider transition-colors">
-                <FileText className="w-3.5 h-3.5" /> View Network
+              <div className="text-5xl font-semibold tracking-tighter text-foreground mb-3">{gaps.length} <span className="text-[20px] font-semibold text-muted-foreground">Gaps</span></div>
+              <div className="text-[13px] font-medium text-muted-foreground">Requires {gaps[0].type}</div>
+              <Link href={`/projects/${project.id}/evidence`} className="inline-flex items-center gap-2 mt-5 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors">
+                <FileText className="w-4 h-4" /> View Network
               </Link>
             </div>
           ) : (
             <div>
-              <div className="flex items-center gap-2 text-3xl font-semibold text-[#10b981] mb-2">
-                <CheckCircle2 className="w-7 h-7" /> Verified
+              <div className="flex items-center gap-3 text-[28px] font-semibold text-foreground mb-3">
+                <CheckCircle2 className="w-8 h-8 text-muted-foreground" /> Verified
               </div>
-              <div className="text-xs font-medium text-muted-foreground mt-4">All submitted facts are supported by available evidence.</div>
+              <div className="text-[14px] font-medium text-muted-foreground mt-4 leading-relaxed">All submitted facts are supported by available evidence.</div>
             </div>
           )}
         </div>
@@ -122,7 +122,7 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 pt-8 pb-16">
         {/* Left: Alignment Visualization */}
         <div className="xl:col-span-5 flex flex-col gap-8">
-          <div className="bg-card border border-border/50 rounded-2xl overflow-hidden shadow-sm h-[600px]">
+          <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm h-[600px]">
             <AlignmentScore score={project.alignmentScore} />
           </div>
         </div>

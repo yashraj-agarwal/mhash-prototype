@@ -44,26 +44,26 @@ export function AnalysisProgress({ onComplete }: { onComplete: () => void }) {
               key={step.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`relative overflow-hidden rounded-xl border p-4 ${isCurrent ? 'bg-background border-anvaya-blue shadow-[0_0_15px_rgba(59,130,246,0.15)]' : 'bg-accent/30 border-border'}`}
+              className={`relative overflow-hidden rounded-xl border p-4 ${isCurrent ? 'bg-card border-primary shadow-sm' : 'bg-secondary/50 border-border'}`}
             >
               {isCurrent && (
                 <motion.div 
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: step.duration / 1000, ease: "linear" }}
-                  className="absolute bottom-0 left-0 h-1 bg-anvaya-blue"
+                  className="absolute bottom-0 left-0 h-1 bg-primary"
                 />
               )}
               
               <div className="flex items-center gap-6">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isComplete ? 'bg-anvaya-green/10 text-anvaya-green' : 'bg-anvaya-blue/10 text-anvaya-blue'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isComplete ? 'bg-secondary text-muted-foreground' : 'bg-primary/10 text-primary'}`}>
                   {isComplete ? <CheckCircle2 className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
                 </div>
                 
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
-                    <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase">{step.id}</span>
-                    <h3 className={`text-sm font-bold uppercase tracking-wider ${isCurrent ? 'text-foreground' : 'text-muted-foreground'}`}>{step.title}</h3>
+                    <span className="text-[11px] font-mono font-semibold text-muted-foreground uppercase">{step.id}</span>
+                    <h3 className={`text-[13px] font-semibold tracking-tight ${isCurrent ? 'text-foreground' : 'text-muted-foreground'}`}>{step.title}</h3>
                   </div>
                   
                   <div className="h-4">
@@ -72,7 +72,7 @@ export function AnalysisProgress({ onComplete }: { onComplete: () => void }) {
                         <motion.div 
                           initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-xs font-medium text-anvaya-green"
+                          className="text-xs font-medium text-muted-foreground"
                         >
                           ✓ {step.summary}
                         </motion.div>
@@ -83,7 +83,7 @@ export function AnalysisProgress({ onComplete }: { onComplete: () => void }) {
                           animate={{ opacity: 1 }}
                           className="text-xs text-muted-foreground flex items-center gap-2"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-anvaya-blue animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                           Processing deterministic rules...
                         </motion.div>
                       )}

@@ -5,18 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-anvaya-green: #142b22;
-  --color-anvaya-amber: #f59e0b;
-  --color-anvaya-orange: #f97316;
-  --color-anvaya-red: #ef4444;
-  --color-anvaya-blue: #176247;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   
-  /* Premium System Font Stack */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  /* Apple System Font Stack */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -48,98 +43,114 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   
-  /* Subtle radius system */
+  /* Strict Radius System */
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 24px;
-  --radius-3xl: 32px;
+  --radius-md: 8px; /* Inputs */
+  --radius-lg: 12px;
+  --radius-xl: 16px; /* Cards */
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
 }
 
 :root {
-  /* Warm off-white background */
-  --background: #FAFAF8;
-  --foreground: #0c1212;
+  /* Apple Marketing / Enterprise Light Mode */
+  --background: #fbfbfd;
+  --foreground: #1d1d1f;
   
-  /* Pure white elevated cards */
+  /* Elevated surfaces */
   --card: #FFFFFF;
-  --card-foreground: #0c1212;
+  --card-foreground: #1d1d1f;
   
   --popover: #FFFFFF;
-  --popover-foreground: #0c1212;
+  --popover-foreground: #1d1d1f;
   
-  /* Deep institutional green */
-  --primary: #142b22;
+  /* Primary Actions (Apple Blue) */
+  --primary: #0071e3;
   --primary-foreground: #FFFFFF;
   
-  /* Subtle secondary surface */
-  --secondary: #F5F6F3;
-  --secondary-foreground: #142b22;
+  /* Subtle Backgrounds */
+  --secondary: #f5f5f7;
+  --secondary-foreground: #1d1d1f;
   
-  /* Semantic grays */
-  --muted: #F5F6F3;
-  --muted-foreground: #71766f;
+  /* Muted Text / Elements */
+  --muted: #f5f5f7;
+  --muted-foreground: #6e6e73;
   
-  /* Accents */
-  --accent: #e8ebe9;
-  --accent-foreground: #142b22;
+  /* Light Interactive Surfaces */
+  --accent: #f5f5f7;
+  --accent-foreground: #1d1d1f;
   
-  /* Status */
-  --destructive: #ef4444;
+  /* Status (High Contrast instead of Red for pure minimal look) */
+  --destructive: #1d1d1f;
   
-  /* Ultra-light borders */
-  --border: #E8EBE9;
-  --input: #E8EBE9;
+  /* Borders (Near invisible) */
+  --border: rgba(0, 0, 0, 0.06);
+  --input: rgba(0, 0, 0, 0.08);
   
-  --ring: #176247;
+  --ring: #0071e3;
   
-  --chart-1: #142b22;
-  --chart-2: #204434;
-  --chart-3: #176247;
-  --chart-4: #10261d;
-  --chart-5: #10b981;
+  /* Status Palette (Routed strictly) */
+  --chart-1: #0071e3; /* Brand Blue */
+  --chart-2: #86868b; /* Neutral Gray */
+  --chart-3: #1d1d1f; /* Critical Black */
+  --chart-4: #f5f5f7; /* Background element */
+  --chart-5: #000000; /* Contrast element */
   
-  --radius: 0.875rem;
+  --radius: 12px;
   
   /* Sidebar */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0c1212;
-  --sidebar-primary: #142b22;
+  --sidebar: #fbfbfd;
+  --sidebar-foreground: #1d1d1f;
+  --sidebar-primary: #0071e3;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F5F6F3;
-  --sidebar-accent-foreground: #142b22;
-  --sidebar-border: #E8EBE9;
-  --sidebar-ring: #176247;
+  --sidebar-accent: #f5f5f7;
+  --sidebar-accent-foreground: #1d1d1f;
+  --sidebar-border: rgba(0, 0, 0, 0.06);
+  --sidebar-ring: #0071e3;
 }
 
 .dark {
-  --background: #0c1212;
-  --foreground: #FAFAF8;
-  --card: #141A17;
-  --card-foreground: #FAFAF8;
-  --popover: #141A17;
-  --popover-foreground: #FAFAF8;
-  --primary: #FFFFFF;
-  --primary-foreground: #142b22;
-  --secondary: #222926;
-  --secondary-foreground: #FAFAF8;
-  --muted: #222926;
-  --muted-foreground: #A1A7A4;
-  --accent: #222926;
-  --accent-foreground: #FAFAF8;
-  --destructive: #ef4444;
-  --border: #2C3531;
-  --input: #2C3531;
-  --ring: #6F9788;
-  --sidebar: #0c1212;
-  --sidebar-foreground: #FAFAF8;
-  --sidebar-primary: #FFFFFF;
-  --sidebar-primary-foreground: #142b22;
-  --sidebar-accent: #222926;
-  --sidebar-accent-foreground: #FAFAF8;
-  --sidebar-border: #2C3531;
-  --sidebar-ring: #6F9788;
+  /* Apple Marketing / Enterprise Dark Mode */
+  --background: #000000;
+  --foreground: #f5f5f7;
+  
+  --card: #1c1c1e;
+  --card-foreground: #f5f5f7;
+  
+  --popover: #1c1c1e;
+  --popover-foreground: #f5f5f7;
+  
+  /* Primary Actions (Apple Dark Blue) */
+  --primary: #0a84ff;
+  --primary-foreground: #ffffff;
+  
+  --secondary: #2c2c2e;
+  --secondary-foreground: #f5f5f7;
+  
+  --muted: #1c1c1e;
+  --muted-foreground: #86868b;
+  
+  --accent: #2c2c2e;
+  --accent-foreground: #f5f5f7;
+  
+  /* High contrast */
+  --destructive: #ffffff;
+  
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  
+  --ring: #0a84ff;
+  
+  /* Sidebar */
+  --sidebar: #000000;
+  --sidebar-foreground: #f5f5f7;
+  --sidebar-primary: #0a84ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c2c2e;
+  --sidebar-accent-foreground: #f5f5f7;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #0a84ff;
 }
 
 @layer base {
@@ -151,6 +162,8 @@
     /* Font smoothing for Apple-like crispness */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Global tabular numbers for dense data */
+    font-variant-numeric: tabular-nums;
   }
   html {
     @apply font-sans;

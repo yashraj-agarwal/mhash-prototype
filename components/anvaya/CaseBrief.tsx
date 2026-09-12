@@ -25,20 +25,20 @@ Additional evidence is recommended before escalation.`;
   }, []);
 
   return (
-    <div className="border border-border bg-card/50 rounded-xl p-8 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-anvaya-blue via-anvaya-green to-anvaya-orange"></div>
+    <div className="border border-border bg-card rounded-3xl p-8 relative overflow-hidden shadow-sm">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary/50 to-primary/10"></div>
       
       <div className="flex items-center gap-2 mb-6">
-        <Sparkles className="w-5 h-5 text-anvaya-blue" />
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">OpenAI Case Brief</h3>
+        <Sparkles className="w-5 h-5 text-primary" />
+        <h3 className="text-[13px] font-semibold tracking-tight text-foreground">AI CASE BRIEF</h3>
       </div>
       
-      <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed font-light text-lg whitespace-pre-wrap min-h-[160px]">
+      <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed font-medium text-[16px] whitespace-pre-wrap min-h-[160px]">
         {text}
         <motion.span
           animate={{ opacity: [0, 1, 0] }}
           transition={{ repeat: Infinity, duration: 0.8 }}
-          className="inline-block w-1.5 h-5 bg-anvaya-blue ml-1 align-middle"
+          className="inline-block w-1.5 h-5 bg-primary ml-1 align-middle"
         />
       </div>
     </div>

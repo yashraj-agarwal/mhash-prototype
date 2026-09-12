@@ -28,15 +28,15 @@ export function EvidenceMap({ changeEventTitle, available, missing }: Props) {
         
         {/* Central Node */}
         <motion.div 
-          initial={{ scale: 0 }} animate={{ scale: 1 }}
+          initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5, ease: [0.28, 0.11, 0.32, 1] }}
           className="relative flex flex-col items-center z-20"
         >
-          <div className="w-24 h-24 rounded-full bg-background border-4 border-anvaya-orange flex items-center justify-center shadow-[0_0_30px_rgba(249,115,22,0.15)] z-20">
-            <Search className="w-8 h-8 text-anvaya-orange" />
+          <div className="w-24 h-24 rounded-full bg-card border-[3px] border-primary flex items-center justify-center shadow-sm z-20">
+            <Search className="w-8 h-8 text-primary" />
           </div>
-          <div className="absolute top-full mt-4 bg-background border border-border px-4 py-2 rounded-lg text-center shadow-lg w-48 z-30">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-anvaya-orange mb-1">Target Event</div>
-            <div className="text-sm font-semibold">{changeEventTitle}</div>
+          <div className="absolute top-full mt-4 bg-card border border-border px-4 py-2.5 rounded-xl text-center shadow-sm w-48 z-30">
+            <div className="text-[11px] font-semibold tracking-tight text-muted-foreground mb-1">Target Event</div>
+            <div className="text-[14px] font-semibold tracking-tight text-foreground leading-tight">{changeEventTitle}</div>
           </div>
         </motion.div>
 
@@ -52,20 +52,20 @@ export function EvidenceMap({ changeEventTitle, available, missing }: Props) {
             >
               {/* Connection Line */}
               <div className="absolute top-1/2 right-full w-16 h-px bg-border -translate-y-1/2">
-                <div className={`absolute inset-0 ${node.isMissing ? 'bg-anvaya-red opacity-20' : 'bg-anvaya-green opacity-20'}`} />
+                <div className={`absolute inset-0 ${node.isMissing ? 'bg-destructive opacity-30' : 'bg-primary opacity-30'}`} />
               </div>
               
-              <div className={`relative flex items-center gap-4 p-4 rounded-xl border bg-background transition-all ${hoveredNode === node.id ? 'scale-105 shadow-xl' : 'shadow-sm'} ${node.isMissing ? 'border-anvaya-red/30' : 'border-border'}`}>
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${node.isMissing ? 'bg-anvaya-red/10 text-anvaya-red' : 'bg-anvaya-blue/10 text-anvaya-blue'}`}>
+              <div className={`relative flex items-center gap-4 p-4 rounded-2xl border bg-card transition-all ${hoveredNode === node.id ? 'scale-[1.02] shadow-md' : 'shadow-sm'} ${node.isMissing ? 'border-destructive/30' : 'border-border'}`}>
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${node.isMissing ? 'bg-destructive/10 text-destructive' : 'bg-secondary text-foreground'}`}>
                   {node.isMissing ? <XCircle className="w-6 h-6" /> : <FileText className="w-6 h-6" />}
                 </div>
                 <div className="flex-1">
-                  <h4 className={`text-sm font-bold ${node.isMissing ? 'text-anvaya-red' : 'text-foreground'}`}>{node.title}</h4>
-                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mt-1">{node.type}</p>
+                  <h4 className={`text-[14px] font-semibold tracking-tight ${node.isMissing ? 'text-destructive' : 'text-foreground'}`}>{node.title}</h4>
+                  <p className="text-[11px] font-medium text-muted-foreground tracking-tight mt-1">{node.type}</p>
                 </div>
                 <div>
                   {node.isMissing ? (
-                    <span className="px-2 py-1 rounded bg-anvaya-red/10 text-anvaya-red text-[10px] font-bold uppercase tracking-wider">Gap</span>
+                    <span className="px-2.5 py-1 rounded-full bg-destructive/10 text-destructive text-[11px] font-semibold tracking-tight">Gap</span>
                   ) : (
                     <Link2 className="w-5 h-5 text-muted-foreground opacity-50" />
                   )}
@@ -74,11 +74,11 @@ export function EvidenceMap({ changeEventTitle, available, missing }: Props) {
               
               {/* Tooltip on hover */}
               {hoveredNode === node.id && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-64 bg-card border border-border p-4 rounded-lg shadow-xl z-50">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">Evidence Metadata</div>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between"><span className="text-muted-foreground">Status:</span> <span className={node.isMissing ? 'text-anvaya-red font-bold' : 'text-anvaya-green font-bold'}>{node.status}</span></div>
-                    {!node.isMissing && <div className="flex justify-between"><span className="text-muted-foreground">Submitted:</span> <span>Just now</span></div>}
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-64 bg-card border border-border p-5 rounded-2xl shadow-lg z-50">
+                  <div className="text-[11px] font-semibold tracking-tight text-muted-foreground mb-3">Evidence Metadata</div>
+                  <div className="space-y-3 text-[13px] font-medium">
+                    <div className="flex justify-between items-center border-b border-border/50 pb-2"><span className="text-muted-foreground">Status</span> <span className={node.isMissing ? 'text-destructive font-semibold' : 'text-foreground font-semibold'}>{node.status}</span></div>
+                    {!node.isMissing && <div className="flex justify-between items-center pt-1"><span className="text-muted-foreground">Submitted</span> <span className="font-semibold text-foreground">Just now</span></div>}
                   </div>
                 </motion.div>
               )}

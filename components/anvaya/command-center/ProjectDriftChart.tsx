@@ -11,17 +11,17 @@ export function ProjectDriftChart() {
   const innerW = chartWidth - padding.left - padding.right;
   const innerH = chartHeight - padding.top - padding.bottom;
 
-  const colors = ['#ef4444', '#f59e0b', '#176247'];
+  const colors = ['var(--foreground)', 'var(--muted-foreground)', 'var(--primary)'];
 
   return (
-    <div className="bg-white border border-[#d8deda] rounded-lg p-5">
-      <h3 className="text-[10px] font-bold text-[#142b22] uppercase tracking-[0.15em] mb-4">Project Drift Over Time</h3>
+    <div className="bg-card border border-border rounded-2xl p-6">
+      <h3 className="text-[13px] font-semibold text-muted-foreground tracking-tight mb-5">Project Drift Over Time</h3>
       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full">
         {/* Y-axis labels */}
         {[100, 80, 60].map(v => (
           <g key={v}>
-            <text x={padding.left - 4} y={padding.top + innerH * (1 - (v - 50) / 50)} textAnchor="end" dominantBaseline="middle" className="fill-[#b5b9b3] text-[7px]">{v}%</text>
-            <line x1={padding.left} y1={padding.top + innerH * (1 - (v - 50) / 50)} x2={chartWidth - padding.right} y2={padding.top + innerH * (1 - (v - 50) / 50)} stroke="#e8ebe9" strokeWidth="0.5" strokeDasharray="3 3" />
+            <text x={padding.left - 6} y={padding.top + innerH * (1 - (v - 50) / 50)} textAnchor="end" dominantBaseline="middle" className="fill-muted-foreground text-[8px] font-medium">{v}%</text>
+            <line x1={padding.left} y1={padding.top + innerH * (1 - (v - 50) / 50)} x2={chartWidth - padding.right} y2={padding.top + innerH * (1 - (v - 50) / 50)} stroke="var(--border)" strokeWidth="1" strokeDasharray="4 4" />
           </g>
         ))}
 
@@ -43,37 +43,40 @@ export function ProjectDriftChart() {
                 d={pathD}
                 fill="none"
                 stroke={colors[pIdx]}
-                strokeWidth="2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
+                strokeLinejoin="round"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ delay: pIdx * 0.3 + 0.5, duration: 1 }}
+                transition={{ delay: pIdx * 0.2 + 0.3, duration: 1.2, ease: [0.28, 0.11, 0.32, 1] }}
               />
               {/* End dot */}
               <motion.circle
                 cx={points[points.length - 1].x}
                 cy={points[points.length - 1].y}
-                r={3}
+                r={4}
                 fill={colors[pIdx]}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: pIdx * 0.3 + 1.5 }}
+                stroke="var(--background)"
+                strokeWidth="1.5"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: pIdx * 0.2 + 1.2, duration: 0.5, ease: [0.28, 0.11, 0.32, 1] }}
               />
             </g>
           );
         })}
 
         {/* X-axis label */}
-        <text x={padding.left} y={chartHeight - 4} className="fill-[#b5b9b3] text-[7px]">Award</text>
-        <text x={chartWidth - padding.right} y={chartHeight - 4} textAnchor="end" className="fill-[#b5b9b3] text-[7px]">Today</text>
+        <text x={padding.left} y={chartHeight - 4} className="fill-muted-foreground text-[8px] font-medium">Award</text>
+        <text x={chartWidth - padding.right} y={chartHeight - 4} textAnchor="end" className="fill-muted-foreground text-[8px] font-medium">Today</text>
       </svg>
 
       {/* Legend */}
-      <div className="flex gap-4 mt-3">
+      <div className="flex gap-4 mt-4">
         {FEATURED_PROJECTS.map((p, i) => (
-          <div key={p.id} className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: colors[i] }} />
-            <span className="text-[9px] font-semibold text-[#71766f] uppercase tracking-wider">{p.name.split(' ').slice(0, 2).join(' ')}</span>
+          <div key={p.id} className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: colors[i] }} />
+            <span className="text-[11px] font-semibold text-muted-foreground tracking-tight">{p.name.split(' ').slice(0, 2).join(' ')}</span>
           </div>
         ))}
       </div>
