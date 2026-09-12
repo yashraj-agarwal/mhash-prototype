@@ -30,13 +30,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} antialiased h-full`}
+      className={`${inter.variable} antialiased h-full w-full`}
     >
-      <body className="min-h-full flex bg-background text-foreground overflow-hidden font-sans">
+      <body className="h-[100dvh] w-full flex bg-background text-foreground overflow-hidden font-sans">
         <AppSidebar />
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 h-[100dvh]">
           <TopNavigation />
-          <main className="flex-1 overflow-y-auto">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden">
             {children}
           </main>
         </div>

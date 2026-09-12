@@ -18,7 +18,7 @@ export default function LandingPage(props: Partial<typeof settings>) {
   
   return (
     <div data-demo-scroll data-slipstream-demo tabIndex={0} role="region" aria-label="Anvaya. Scroll to step inside."
-      style={{ width: "100%", height: "100vh", overflowY: "auto", background: "#fff", containerType: "inline-size", fontFamily: family }}>
+      style={{ width: "100%", height: "100%", overflowY: "auto", background: "#fff", containerType: "inline-size", fontFamily: family, WebkitOverflowScrolling: "touch" }}>
       <style>{`
         [data-slipstream-demo] [data-gp-caption]{inset:calc(var(--gp-word-bottom,50%) + 82px) 24px auto;justify-content:center;}
         [data-slipstream-demo] [data-gp-hint]{display:none;}
