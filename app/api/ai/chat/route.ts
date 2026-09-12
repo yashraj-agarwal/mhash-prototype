@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     };
 
     const payload = {
-      model: 'llama-3.3-70b-versatile',
+      model: 'mixtral-8x7b-32768',
       messages: [systemMessage, ...messages],
       temperature: 0.1,
       stream: true,
