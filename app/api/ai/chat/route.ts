@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     };
 
     const payload = {
-      model: 'mixtral-8x7b-32768',
+      model: 'openai/gpt-oss-120b',
       messages: [systemMessage, ...messages],
       temperature: 0.1,
       stream: true,
