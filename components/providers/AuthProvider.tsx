@@ -7,7 +7,7 @@ import type { Persona } from '@/lib/auth/personas';
 type AuthContextType = {
   user: Persona | null;
   ready: boolean;
-  login: (userId: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 };
 
@@ -37,13 +37,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [pathname]);
 
-  const login = async (userId: string) => {
+  const login = async (email: string, password: string) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) throw new Error('Sign-in failed');
+    if (!res.ok) throw new Error('Invalid credentials');
     const data = await res.json();
     setUser(data.user);
     router.refresh();
