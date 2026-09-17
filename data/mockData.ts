@@ -365,7 +365,7 @@ function makeProject(
       currentSubcontractor: '', materials: {},
     },
     reviewCases: hasVariations ? [{
-      id: `ANV-${500 + Math.floor(Math.random() * 400)}`,
+      id: `ANV-${id.replace(/[^a-z0-9]/gi, '').slice(-6).toUpperCase()}`,
       projectId: id, title: `Variations Detected in ${name}`,
       priorityScore: priority, priorityLevel: priority > 70 ? 'HIGH' : priority > 40 ? 'MEDIUM' : 'LOW',
       status: reviewStatus,
@@ -377,11 +377,13 @@ function makeProject(
         before: '-', after: '-', delta: costDelta > 10 ? `+${costDelta.toFixed(1)}%` : 'Changed',
         severity: (priority > 60 ? 'HIGH' : 'MEDIUM') as 'HIGH' | 'MEDIUM',
         policyTriggered: 'Threshold exceeded', recommendedAction: 'Review required',
-        timestamp: new Date().toISOString(),
+        timestamp: `${awardDate}T12:00:00Z`,
+        missingEvidenceId: i < gapCount ? `ev-${id}-gap-${i}` : undefined,
       })),
       evidence: [{ id: `ev-${id}-award`, type: 'Award Contract', title: 'Award Contract', status: 'AVAILABLE' as const }],
       evidenceGaps: Array.from({ length: gapCount }, (_, i) => ({
         id: `ev-${id}-gap-${i}`, type: 'Variation Order', title: `Missing Document ${i + 1}`, status: 'MISSING' as const,
+        linkedChangeEvent: `ce-${id}-${i}`,
       })),
     }] : [],
   };

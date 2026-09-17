@@ -1,15 +1,19 @@
-import { Network } from 'lucide-react';
+import { ALL_PROJECTS } from '@/data/mockData';
+import { buildGlobalGraph } from '@/lib/graph/buildGraph';
+import { RelationshipGraph } from '@/components/visualizations/RelationshipGraph';
 
 export default function KnowledgeGraphPage() {
+  const { nodes, edges } = buildGlobalGraph(ALL_PROJECTS);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-full space-y-4 p-8">
-      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-        <Network className="w-8 h-8 text-primary" />
+    <div className="p-8 max-w-[1400px] mx-auto space-y-6 pb-28">
+      <div>
+        <h1 className="text-4xl font-light tracking-tight">Knowledge Graph</h1>
+        <p className="text-muted-foreground mt-2 font-light max-w-2xl">
+          One graph, jurisdiction-scoped views. Projects, contractors, and open review cases from the current mock store.
+        </p>
       </div>
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground">Knowledge Graph Explorer</h1>
-      <p className="text-muted-foreground text-center max-w-md">
-        This module is currently in development. It will provide a visual interface to explore relationships between projects, contractors, and material variations across the entire temporal knowledge graph.
-      </p>
+      <RelationshipGraph nodes={nodes} edges={edges} className="h-[calc(100dvh-220px)]" />
     </div>
   );
 }
