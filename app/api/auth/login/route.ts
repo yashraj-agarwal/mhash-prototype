@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getPersona, SESSION_COOKIE } from '@/lib/auth/personas';
+import { authenticate, SESSION_COOKIE } from '@/lib/auth/personas';
 
 export async function POST(req: Request) {
-  const { userId } = await req.json();
-  const persona = getPersona(userId);
+  const { email, password } = await req.json();
+  const persona = authenticate(String(email ?? ''), String(password ?? ''));
   if (!persona) {
-    return NextResponse.json({ error: 'Unknown persona' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
 
   const res = NextResponse.json({ user: persona });

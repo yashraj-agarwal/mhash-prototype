@@ -59,9 +59,21 @@ export const PERSONAS: Persona[] = [
   },
 ];
 
+export const DEMO_PASSWORD = 'anvaya-demo';
+
 export function getPersona(id: string | undefined | null): Persona | undefined {
   if (!id) return undefined;
   return PERSONAS.find((p) => p.id === id);
+}
+
+export function getPersonaByEmail(email: string): Persona | undefined {
+  const needle = email.trim().toLowerCase();
+  return PERSONAS.find((p) => p.email.toLowerCase() === needle);
+}
+
+export function authenticate(email: string, password: string): Persona | null {
+  if (password !== DEMO_PASSWORD) return null;
+  return getPersonaByEmail(email) ?? null;
 }
 
 export function safeNextPath(raw: string | null | undefined): string {
