@@ -1,16 +1,18 @@
 "use client";
 import { usePathname } from 'next/navigation';
-import { Bell, Search, Command, UserCircle, Plus, ChevronRight } from 'lucide-react';
+import { Bell, Search, Command, UserCircle, Plus, ChevronRight, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { useSystem } from '@/components/providers/SystemProviders';
+import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 
 export function TopNavigation() {
   const pathname = usePathname();
   const { setCommandPaletteOpen } = useSystem();
+  const { user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
   
-  // Hide on landing page
-  if (pathname === '/') return null;
+  if (pathname === '/' || pathname === '/login') return null;
 
   // Generate breadcrumbs from pathname
   const pathSegments = pathname.split('/').filter(Boolean);
@@ -61,7 +63,7 @@ export function TopNavigation() {
           Demo Mode
           <div className="absolute top-full mt-2 right-0 w-64 p-3 rounded-lg border border-border bg-card shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 text-left">
             <p className="text-muted-foreground text-xs font-medium normal-case">
-              Mock deterministic dataset loaded. System is currently analyzing NH-42 Highway Expansion.
+              Mock graph loaded. Session: {user?.title ?? 'officer'} · {user?.jurisdiction ?? 'jurisdiction'}.
             </p>
           </div>
         </div>
@@ -78,10 +80,34 @@ export function TopNavigation() {
             <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-destructive rounded-full border border-background"></span>
           </button>
           
-          {/* Profile */}
-          <button className="ml-2 w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors">
-            <UserCircle className="w-4 h-4 text-primary" />
-          </button>
+          <div className="relative ml-2">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+              title={user?.name}
+            >
+              <UserCircle className="w-4 h-4 text-primary" />
+            </button>
+            {menuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-border bg-card shadow-xl p-3 z-50">
+                <div className="text-[13px] font-semibold">{user?.name}</div>
+                <div className="text-[12px] text-muted-foreground mt-0.5">{user?.title}</div>
+                <div className="text-[11px] text-muted-foreground mt-1">{user?.jurisdiction}</div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    logout();
+                  }}
+                  className="mt-3 w-full inline-flex items-center gap-2 rounded-lg px-2 py-2 text-[12px] font-medium hover:bg-accent text-muted-foreground hover:text-foreground"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  Sign out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

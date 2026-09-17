@@ -28,8 +28,7 @@ export function AppSidebar() {
   const pathname = usePathname();
   const { isSidebarExpanded, toggleSidebar } = useSystem();
   
-  // Hide sidebar entirely on the landing page (root) to let the cinematic hero shine
-  if (pathname === '/') return null;
+  if (pathname === '/' || pathname === '/login') return null;
 
   return (
     <div 

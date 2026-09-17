@@ -1,48 +1,62 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { getPersona, SESSION_COOKIE } from '@/lib/auth/personas';
+import { buildIntelligenceContext } from '@/lib/intelligence/context';
 
-const SYSTEM_PROMPT = `You are ANVAYA, an advanced Post-Award Intelligence System for public infrastructure projects.
-Your role is to assist government officials, auditors, and engineers in tracking project drift, material variations, schedule delays, and evidence gaps.
+const SYSTEM_PROMPT = `You are ANVAYA, the post-award intelligence copilot for public works.
+You answer from GRAPH OBJECTS supplied in context: projects, award snapshots, parties, change events, evidence, review cases, and contractor concentration.
+Treat every change as a variation that may be legitimate. Use the words alignment, variation, needs explanation, needs evidence, intervene.
+Do not invent documents, amounts, parties, or dates that are not in the context.
+If memory notes are present, use them as continuing officer intent.
 
-TONE & PERSONALITY:
-- Analytical, highly concise, objective. 
-- Use Bloomberg-terminal style information density.
-- Do not use generic AI filler ("I'd be happy to help", "As an AI").
-- State facts directly. 
-
-CONTEXT AWARENESS:
-- You may receive context about the current project the user is viewing. Use it to inform your answers.
-- The user is viewing a dashboard for Indian public infrastructure projects.
-
-FORMATTING:
-- Use bullet points for data.
-- Keep paragraphs to 1-2 sentences.
-- Emphasize critical deviations (Cost, Schedule, Material).`;
+TONE: analytical, concise, no filler.
+FORMAT: short bullets for facts; 1-2 sentence implications.`;
 
 export async function POST(req: Request) {
   try {
-    const { messages, context } = await req.json();
+    const jar = await cookies();
+    if (!getPersona(jar.get(SESSION_COOKIE)?.value)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { messages, pathname, memory, officer } = await req.json();
+    const graphContext = buildIntelligenceContext(typeof pathname === 'string' ? pathname : '/');
+    const memoryBlock = Array.isArray(memory) && memory.length
+      ? memory.map((note: string) => `- ${note}`).join('\n')
+      : 'none yet';
+
+    const systemMessage = {
+      role: 'system',
+      content: `${SYSTEM_PROMPT}
+
+OFFICER: ${officer || 'unknown'}
+SESSION MEMORY:
+${memoryBlock}
+
+GRAPH CONTEXT:
+${graphContext}`,
+    };
 
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      // Return a simulated stream for UI demonstration when API key is missing
+      const lastUser = [...(messages || [])].reverse().find((m: { role: string }) => m.role === 'user');
+      const text = simulateFromGraph(graphContext, lastUser?.content || '');
       const encoder = new TextEncoder();
       const mockStream = new ReadableStream({
         async start(controller) {
-          const text = "SYSTEM NOTE: GROQ_API_KEY is not configured in .env.local. This is a simulated response.\n\nBased on the current project data, there are several material variations detected. I recommend checking the Intelligence Network for gaps in the evidence.";
-          const words = text.split(" ");
-          
+          const words = text.split(' ');
           for (let i = 0; i < words.length; i++) {
             const chunk = JSON.stringify({
-              choices: [{ delta: { content: words[i] + (i < words.length - 1 ? " " : "") } }]
+              choices: [{ delta: { content: words[i] + (i < words.length - 1 ? ' ' : '') } }],
             });
             controller.enqueue(encoder.encode(`data: ${chunk}\n\n`));
-            await new Promise(r => setTimeout(r, 50));
+            await new Promise((r) => setTimeout(r, 18));
           }
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
           controller.close();
-        }
+        },
       });
-      
+
       return new Response(mockStream, {
         headers: {
           'Content-Type': 'text/event-stream',
@@ -52,24 +66,17 @@ export async function POST(req: Request) {
       });
     }
 
-    // Prepare messages array
-    const systemMessage = {
-      role: 'system',
-      content: `${SYSTEM_PROMPT}\n\nCURRENT UI CONTEXT:\n${context || 'No specific project context active.'}`
-    };
-
     const payload = {
       model: 'openai/gpt-oss-120b',
-      messages: [systemMessage, ...messages],
+      messages: [systemMessage, ...(messages || [])],
       temperature: 0.1,
       stream: true,
     };
 
-    // Call Groq API
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
@@ -80,7 +87,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: errorText }, { status: response.status });
     }
 
-    // Proxy the SSE stream directly to the client
     return new Response(response.body, {
       headers: {
         'Content-Type': 'text/event-stream',
@@ -88,12 +94,22 @@ export async function POST(req: Request) {
         'Connection': 'keep-alive',
       },
     });
-
-  } catch (error: any) {
+  } catch (error) {
     console.error('AI Chat Error:', error);
     return NextResponse.json(
       { error: 'An error occurred while processing your request.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
+}
+
+function simulateFromGraph(graphContext: string, question: string) {
+  const active = graphContext.includes('ACTIVE PROJECT FILE: none')
+    ? null
+    : graphContext.split('ACTIVE PROJECT FILE:\n')[1]?.split('\n\n')[0];
+  if (active) {
+    const first = active.split('\n')[0];
+    return `${first}\n\nFrom the graph on this file:\n- Award vs later facts are both on the same project object.\n- Material change events and evidence gaps are already attached to the review case.\n- Recommended action stays request evidence until a variation order or lab report is committed.\n\nQuestion received: ${question || 'general alignment'}.`;
+  }
+  return `Queue view.\n\nHighest-priority files are listed in GRAPH CONTEXT. Repeated contractors appear under CONTRACTOR CONCENTRATION. Open a project file to compare the award snapshot with later facts.\n\nQuestion received: ${question || 'general rollup'}.`;
 }

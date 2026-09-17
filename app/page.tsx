@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import GlyphPortal from "@/components/ui/glyph-portal";
 import Link from 'next/link';
 import { ArrowRight } from "lucide-react";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 const settings = { word: "ANVAYA", scrollLength: 2.4, interactive: true, annotations: false };
 const family = 'var(--font-sans), Arial, sans-serif';
@@ -11,6 +12,7 @@ const family = 'var(--font-sans), Arial, sans-serif';
 export default function LandingPage(props: Partial<typeof settings>) {
   const s = { ...settings, ...props };
   const [mounted, setMounted] = useState(false);
+  const { user } = useAuth();
   
   useEffect(() => {
     setMounted(true);
@@ -99,8 +101,8 @@ export default function LandingPage(props: Partial<typeof settings>) {
             </div>
             
             <div className="mt-16 flex justify-center w-full">
-              <Link href="/command-center" className="inline-flex items-center justify-center gap-3 px-12 py-4 bg-white text-[#1d1d1f] font-semibold rounded-full hover:bg-gray-100 transition-all shadow-xl hover:-translate-y-1 hover:shadow-2xl">
-                Enter Command Center
+              <Link href={user ? "/command-center" : "/login"} className="inline-flex items-center justify-center gap-3 px-12 py-4 bg-white text-[#1d1d1f] font-semibold rounded-full hover:bg-gray-100 transition-all shadow-xl hover:-translate-y-1 hover:shadow-2xl">
+                {user ? "Enter Command Center" : "Sign in to the workbench"}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

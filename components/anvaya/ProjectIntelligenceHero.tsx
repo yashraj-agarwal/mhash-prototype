@@ -7,7 +7,7 @@ import { AnalysisProgress } from '@/components/anvaya/AnalysisProgress';
 import { Button, buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, GitMerge, Search, AlertTriangle, FileText, CheckCircle2 } from 'lucide-react';
+import { Activity, GitMerge, Search, AlertTriangle, FileText, CheckCircle2, Network } from 'lucide-react';
 
 export function ProjectIntelligenceHero({ project }: { project: Project }) {
   const [analyzing, setAnalyzing] = useState(false);
@@ -65,6 +65,10 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
             <GitMerge className="w-4 h-4 mr-2" />
             View Timeline
           </Link>
+          <Link href={`/projects/${project.id}/graph`} className={buttonVariants({ variant: "outline", className: "h-10 px-4 text-xs font-semibold shadow-sm border-border hover:bg-secondary text-foreground" })}>
+            <Network className="w-4 h-4 mr-2" />
+            Knowledge Graph
+          </Link>
           {project.reviewCases.length > 0 && (
             <Link href={`/projects/${project.id}/review-case`} className={buttonVariants({ className: "h-10 px-6 text-xs font-bold tracking-wide shadow-md bg-primary hover:bg-primary/90 text-primary-foreground" })}>
               <Search className="w-4 h-4 mr-2" />
@@ -105,7 +109,7 @@ export function ProjectIntelligenceHero({ project }: { project: Project }) {
               <div className="text-5xl font-semibold tracking-tighter text-foreground mb-3">{gaps.length} <span className="text-[20px] font-semibold text-muted-foreground">Gaps</span></div>
               <div className="text-[13px] font-medium text-muted-foreground">Requires {gaps[0].type}</div>
               <Link href={`/projects/${project.id}/evidence`} className="inline-flex items-center gap-2 mt-5 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors">
-                <FileText className="w-4 h-4" /> View Network
+                <FileText className="w-4 h-4" /> View evidence
               </Link>
             </div>
           ) : (

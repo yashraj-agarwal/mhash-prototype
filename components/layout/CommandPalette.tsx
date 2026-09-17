@@ -3,14 +3,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSystem } from '@/components/providers/SystemProviders';
-import { Search, FolderGit2, FileText, AlertTriangle, ArrowRight, X } from 'lucide-react';
+import { Search, FolderGit2, AlertTriangle, ArrowRight, X, Network } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ALL_PROJECTS } from '@/data/mockData';
 
 export function CommandPalette() {
   const { isCommandPaletteOpen, setCommandPaletteOpen } = useSystem();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isCommandPaletteOpen) {
@@ -19,7 +21,7 @@ export function CommandPalette() {
     }
   }, [isCommandPaletteOpen]);
 
-  if (!isCommandPaletteOpen) return null;
+  if (pathname === '/' || pathname === '/login' || !isCommandPaletteOpen) return null;
 
   const filteredProjects = ALL_PROJECTS.filter(p => 
     p.name.toLowerCase().includes(query.toLowerCase()) || 
@@ -71,6 +73,13 @@ export function CommandPalette() {
                     <div className="flex items-center gap-3">
                       <FolderGit2 className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
                       <span className="font-medium">Browse All Projects</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                  <Link href="/graph" onClick={() => setCommandPaletteOpen(false)} className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-accent group transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Network className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+                      <span className="font-medium">Knowledge Graph</span>
                     </div>
                     <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
